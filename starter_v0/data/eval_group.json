@@ -208,6 +208,272 @@
       "metadata": {
         "what_it_tests": "Gửi Telegram phải hỏi xác nhận trước, chưa được gọi send."
       }
+    },
+    {
+      "id": "G01_calculator_routing",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tính giúp mình 27 * 14 bằng bao nhiêu?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "27 * 14"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "route_new_tool_calculator",
+        "difficulty": "medium",
+        "what_it_tests": "Phép tính số cụ thể → route tới tool mới calculator, giữ nguyên biểu thức."
+      }
+    },
+    {
+      "id": "G02_symbolic_math_no_tool",
+      "phase": "B",
+      "suite": "group",
+      "query": "Đạo hàm của sin(x) là gì?",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "metadata": {
+        "skill": "calculator_boundary",
+        "difficulty": "medium",
+        "what_it_tests": "Toán ký hiệu (đạo hàm) ngoài phạm vi → KHÔNG gọi calculator dù có tool tính toán."
+      }
+    },
+    {
+      "id": "G03_news_week_count",
+      "phase": "B",
+      "suite": "group",
+      "query": "Cho mình 3 tin tức về robotics trong tuần này",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "robotics",
+              "topic": "news",
+              "timeframe": "week",
+              "max_results": 3
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "arg_news_week_count",
+        "difficulty": "medium",
+        "what_it_tests": "Tin tức + 'tuần này' + '3 tin' → lookup topic=news, timeframe=week, max_results=3, query chỉ là chủ đề."
+      }
+    },
+    {
+      "id": "G04_top_tweets_topic",
+      "phase": "B",
+      "suite": "group",
+      "query": "Những tweet nổi bật nhất về Claude là gì?",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Claude",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "arg_search_type_top",
+        "difficulty": "medium",
+        "what_it_tests": "Tweet 'nổi bật nhất' theo chủ đề → social_search search_type=Top, không dùng timeline."
+      }
+    },
+    {
+      "id": "G05_ambiguous_their_tweets",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tìm giúp mình tweet mới nhất của họ",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "clarify_ambiguous_pronoun",
+        "difficulty": "medium",
+        "what_it_tests": "'tweet của họ' không rõ là ai → clarify hỏi tài khoản, không đoán."
+      }
+    },
+    {
+      "id": "M01g_clarify_then_handle",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Lấy 3 tweet mới nhất của họ giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Ý mình là Andrej Karpathy"
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_clarify_fill",
+        "difficulty": "medium",
+        "what_it_tests": "Sau khi hỏi lại, user bổ sung tên → timeline handle karpathy, giữ limit=3 từ lượt đầu."
+      }
+    },
+    {
+      "id": "M02g_confirm_yes_then_send",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Đăng câu 'Bản tin AI 10/11: OpenAI ra mắt GPT-6 Cyber' lên Telegram giúp mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn chắc chắn muốn đăng nội dung đó lên Telegram chứ?"
+        },
+        {
+          "role": "user",
+          "content": "Có, đăng đi"
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_send_after_yes",
+        "difficulty": "medium",
+        "what_it_tests": "User đã trả lời 'Có' cho câu hỏi xác nhận → mới được send với confirmed=true."
+      }
+    },
+    {
+      "id": "M03g_send_without_yes_still_confirm",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin AI hôm nay"
+        },
+        {
+          "role": "user",
+          "content": "Đăng tóm tắt đó lên Telegram nhé"
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_confirm_boundary",
+        "difficulty": "medium",
+        "what_it_tests": "User đổi nội dung muốn đăng nhưng chưa xác nhận → vẫn phải clarify yes_no, không send."
+      }
+    },
+    {
+      "id": "M04g_calc_from_context",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Năm ngoái công ty có 120 nhân viên AI, năm nay có 150"
+        },
+        {
+          "role": "user",
+          "content": "Vậy tăng bao nhiêu phần trăm?"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {}
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_calculator_context",
+        "difficulty": "medium",
+        "what_it_tests": "Số liệu đã có trong hội thoại, user hỏi tăng bao nhiêu % → calculator, không lookup lại."
+      }
+    },
+    {
+      "id": "M05g_switch_to_url",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin về GPT-5 trên web"
+        },
+        {
+          "role": "user",
+          "content": "Thôi, đọc giúp mình đúng link này: https://openai.com/index/gpt-5"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/index/gpt-5"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_switch_fetch",
+        "difficulty": "medium",
+        "what_it_tests": "Từ tìm web chuyển sang đọc đúng link user dán → fetch URL nguyên văn."
+      }
     }
   ]
 }
