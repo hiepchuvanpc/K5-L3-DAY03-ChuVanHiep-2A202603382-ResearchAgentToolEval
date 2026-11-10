@@ -1,0 +1,879 @@
+{
+  "run_id": "v3_B_group_openrouter_20261110T161741951614",
+  "version": "v3",
+  "artifact_version": "v3+p0e17165c1462+ta662185471df",
+  "prompt_hash": "0e17165c1462c1b9b90f89c320f14863142e6a916a10e4c47fc72d046868bbf7",
+  "tools_hash": "a662185471dfc5dc4a74bbd9b5768f97ac811f1b1eeb9d26f6101d3fcb39fb61",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\Desktop\\Lab\\K5-L3-Day03\\K5-L3-DAY03-ChuVanHiep-2A202603382-ResearchAgentToolEval\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\Desktop\\Lab\\K5-L3-Day03\\K5-L3-DAY03-ChuVanHiep-2A202603382-ResearchAgentToolEval\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "generated_at": "2026-11-10T16:17:41",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 9,
+    "case_accuracy": 0.9,
+    "tool_routing_accuracy": 0.9,
+    "argument_accuracy": 0.9,
+    "multiturn_accuracy": 0.8,
+    "failure_counts": {
+      "wrong_tool": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "group_01_lookup_ai_news",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Tin tức web dùng lookup với topic news và timeframe week."
+      },
+      "input": "Tìm tin AI mới nhất trong tuần này",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "week"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Voters deliver \"AI earthquake,\" rebuking tech and billionaires",
+                "url": "https://www.axios.com/2026/11/04/ai-data-center-election-slowdown",
+                "source": "axios.com",
+                "summary": "AI had its \"official debut\" as the biggest issue in American politics, former New York Assemblymember and RAISE Act author Alex Bores told Axios. \"AI is reaching into every part of our society and economy and it's now crystal clear it's impacting every part of our politics, too.\" [...] Voters showed deep distrust of the AI race Tuesday, approving dozens of data center moratoriums and electing a raft of candidates who favor slowing a $10 trillion buildout, including in Texas — the epicenter of the boom.\n\nWhy it matters: In an election that hinged on an affordability crisis for many Americans, voters made it clear they view Silicon Valley's AI ambitions not as a technological miracle, but as a resource-draining threat to their wallets and communities. [...] Democratic challengers successfully weaponized AI policy, ousting Republicans in Ohio, Wisconsin, Arizona and Pennsylvania.\n   Democratic groups had poured ads into these districts attacking GOP incumbents for a 2025 vote that would've neutered state AI legislation.\n   AI safety advocates won or were poised to win races on Tuesday that will expand their coalition in the new Congress, including Colorado's Manny Rutinel and Minnesota's Matt Little.",
+                "score": 0.31843266
+              },
+              {
+                "title": "Google to end search access for schools that block its AI tools, sparking backlash - CBS News",
+                "url": "https://www.cbsnews.com/news/google-search-access-schools-ai-tools",
+                "source": "cbsnews.com",
+                "summary": "#### Campaign texts, powered by AI: How new tech is shaping voter outreach\n\nA screenshot of a demo conversation with an AI chatbot powered by Convos.ai. \n\n#### Data center health worries animate midterm campaigns\n\nkff-data-centers.jpg \n\n#### Anthropic's IPO lists 93 pages of risks. What could go wrong?\n\nInside Anthropic Headquarters As It's Testing A Different Version Of Leadership \n\n#### Microsoft offers buyouts to 60,000 workers as it invests more in AI [...] \"Multiple courts have found Google liable for violating antitrust laws, and this latest move shows it remains unchastened,\" she added. \"As the public increasingly pushes back against the use of AI in schools, Google is making clear it will punish those who don't fall in line.\"\n\nEdited by\nAlain Sherter\n\n### AI: Artificial Intelligence More\n\n#### Marvell to acquire Lumentum in $115 billion AI connectivity deal\n\nMarvell Headquarters in Santa Clara, California",
+                "score": 0.30681825
+              },
+              {
+                "title": "A single AI model simulates the behavior of many substances, from sliding sand to folding proteins | MIT News | Massachusetts Institute of Technology",
+                "url": "https://news.mit.edu/2026/single-ai-model-simulates-many-substances-behavior-1109",
+                "source": "news.mit.edu",
+                "summary": "Unified simulation\n\nFor this work, the researchers drew inspiration from world models. These powerful AI systems learn the rules that govern the physical world so they can predict how objects or environments will change over time in response to certain actions or conditions.\n\nThe researchers applied these concepts to develop a unified AI architecture that can simulate multiple types of physical phenomena. [...] ## More MIT News\n\nRobot serving a cup of coffee while being instructed not to spill on the laptop\n\n### AI-assisted learning platform helps robots reason beyond literal commands\n\nThe new approach, known as FLEX, could lead to more intuitive, interactive household and assistive robots.\n\nRead full story →\n\nMan wearing a T-shirt and safety goggles standing above a concrete beam in the lab, operating a bench-mounted laser tool scanning the concrete. [...] The system represents every material it simulates, from a dune of sand to a protein molecule, as tiny particles and predicts where those particles will move one step at a time. Because it learns the underlying dynamics rather than being programmed with an equation, the model can adapt to materials, forces, and environments it never encountered during training.",
+                "score": 0.2975827
+              },
+              {
+                "title": "Measuring how AI agents handle everyday wet-lab science",
+                "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+                "source": "openai.com",
+                "summary": "Our mission is to ensure that artificial general intelligence benefits all of humanity. As part of that mission, we want to help scientists accelerate biological research—from understanding disease to developing new treatments. For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs, where they run experiments with biological samples. Everyday wet-lab work involves failed experiments, ambiguous images and conflicting",
+                "score": 0.24436794
+              },
+              {
+                "title": "Authors Can Defend Against AI Allegations With ‘Paper Trail’ Tools. Is It Enough? | WIRED",
+                "url": "https://www.wired.com/story/authors-can-defend-against-ai-allegations-with-paper-trail-tools",
+                "source": "wired.com",
+                "summary": "But Bartz notes that once the accusations start, the damage is done. As the Shy Girl scandal erupted, she says, “I kind of immediately felt like this was going to lead to a potential witch hunt.” The unavoidable emergence of AI in publishing, she explains, will “have the unintended effect of leading anyone to be able to accuse anyone of using AI,” and at the moment, authors have little recourse in defending themselves against these charges. “There’s no agreed upon standard,” Bartz says, in [...] Mia Ballard, the author of Shy Girl, has denied allegations that she used AI to write the novel, claiming that an editor was responsible for AI-assisted changes to a previously self-published version of the book. She has also said that she is pursuing legal action. Since that scandal broke, several more fiction authors have run afoul of AI suspicions, one after winning a short story prize, another after publishers bid into the millions for his crime novel. Both have denied these allegations as [...] “If what you're selling are your words and your voice and your imagination, your creativity, using AI doesn't make sense,” Rasenberger says, noting that authors’ pride in their own work means AI slop is far less common in publishing than one might think. “I've talked to editors, particularly editors of literary nonfiction and fiction,” Rasenberger says, “and some of them will say, ‘I never see AI-generated submissions, I'd know it if I did.’”",
+                "score": 0.2249995
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_02_social_topic",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Chủ đề trên mạng xã hội dùng social_search, không dùng timeline."
+      },
+      "input": "Mọi người đang bàn gì về AI agents trên mạng xã hội?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agents"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agents",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI agents",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "AI agents",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "If you want to become a \"Personal Branding Strategist\" for 'Founders', you have to master these 3 basic skills. ",
+                "summary": "If you want to become a \"Personal Branding Strategist\" for 'Founders', you have to master these 3 basic skills. \n\n1. Organic content strategy\n2. Copywriting\n3. Founder-led content\n\nAnd then you will top it with 'AI agents for workflows' and 'Running automations'.",
+                "url": "https://x.com/avijeet_writes/status/2120083373163213242",
+                "source": "@avijeet_writes",
+                "date": "Tue Nov 10 09:17:20 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "My AI agents now work on my own computer with OpenBot. My chats and files stay with me. Try it: https://t.co/XZLhbI6EKC",
+                "summary": "My AI agents now work on my own computer with OpenBot. My chats and files stay with me. Try it: https://t.co/XZLhbI6EKC",
+                "url": "https://x.com/alperenweb3/status/2120083352422158436",
+                "source": "@alperenweb3",
+                "date": "Tue Nov 10 09:17:15 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@tomreilly_ai Same on my hobby builds: agents type, I review, but how hard I look depends on what can break. In my self-",
+                "summary": "@tomreilly_ai Same on my hobby builds: agents type, I review, but how hard I look depends on what can break. In my self-fixing app lab I went one step further and the AI never deploys at all. A plain guard with no AI checks, deploys and rolls back. Where do config files land on your scale?",
+                "url": "https://x.com/abo0zar/status/2120083275905679711",
+                "source": "@abo0zar",
+                "date": "Tue Nov 10 09:16:56 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "Secrets Kit 2.0.4 is out!",
+                "summary": "Secrets Kit 2.0.4 is out!\n\nOpen-source credential management for macOS &amp; Linux. Encrypted local sync, secure MCP integration for AI agents, and optional cross-network synchronization, without surrendering your encryption keys.\n\nhttps://t.co/xiEGzCLzkF\n\n#Cybersecurity #AIAgents https://t.co/xi9qcE4V1k",
+                "url": "https://x.com/unixwzrd/status/2120083266199789849",
+                "source": "@unixwzrd",
+                "date": "Tue Nov 10 09:16:54 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@MuqadasWeb3 @Concordium Absolutely agree! As AI agents multiply, verifiable identity and accountability will become ess",
+                "summary": "@MuqadasWeb3 @Concordium Absolutely agree! As AI agents multiply, verifiable identity and accountability will become essential.",
+                "url": "https://x.com/bykaralord/status/2120083225817342164",
+                "source": "@bykaralord",
+                "date": "Tue Nov 10 09:16:44 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "3"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_03_fetch_url",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "URL cụ thể dùng fetch."
+      },
+      "input": "Đọc nội dung bài này: https://example.com/ai-report",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://example.com/ai-report"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://example.com/ai-report"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://example.com/ai-report"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://example.com/ai-report",
+            "items": [
+              {
+                "title": "Example Domain",
+                "url": "https://example.com/ai-report",
+                "source": "example.com",
+                "summary": "This domain is for use in documentation examples without needing permission. This is not a service; avoid relying on it for testing and monitoring purposes.\n\nهذا النطاق مُخصص للاستخدام في أمثلة التوثيق دون الحاجة إلى إذن. هذه ليست خدمة، يُرجى تجنب الاعتماد عليها لأغراض الاختبار والمراقبة.\n\n该域名仅用于文档示例，无需获得许可。这并非一项服务，请勿将其用于测试和监控目的。\n\nL’usage de ce domaine est réservé à des exemples de documentation, sans autorisation préalable. Il ne s’agit pas d’un service ; son utilisation à des fins de test ou de surveillance est à éviter.\n\nДанный домен предназначен для использования в примерах документации без необходимости получения предварительного разрешения. Это не сервис; не рекомендуется его использование для тестирования и мониторинга.\n\nEste dominio está destinado al uso en ejemplos de documentación sin necesidad de permiso. Esto no es un servicio; evitar utilizarlo para realizar pruebas o monitoreos.\n\n [Learn more](https://iana.org/help/example-domains)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_04_summarize_text",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Văn bản đã có dùng summarize, không tìm kiếm dữ liệu mới."
+      },
+      "input": "Tóm tắt đoạn này: AI agents can search, read, and organize research sources.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "summarize",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "summarize",
+            "args": {
+              "text": "AI agents can search, read, and organize research sources.",
+              "max_chars": 100
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "summarize",
+          "args": {
+            "text": "AI agents can search, read, and organize research sources.",
+            "max_chars": 100
+          },
+          "result": {
+            "tool": "summarize",
+            "summary": "AI agents can search, read, and organize research sources.",
+            "original_chars": 58
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_05_calculator",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Phép tính rõ ràng dùng calculator."
+      },
+      "input": "Calculate 27 * 14",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "27 * 14"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "27 * 14"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "27 * 14"
+          },
+          "result": {
+            "tool": "calculator",
+            "expression": "27 * 14",
+            "result": 378
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_06_multiturn_account",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Agent dùng thông tin tài khoản được bổ sung ở lượt sau."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tweet gần đây"
+        },
+        {
+          "role": "user",
+          "content": "của openai"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "openai"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "OpenAI",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "OpenAI",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "OpenAI",
+            "items": [
+              {
+                "title": "We built Control Room, a central system to track model workloads across our research infrastructure and stop them quickl",
+                "summary": "We built Control Room, a central system to track model workloads across our research infrastructure and stop them quickly when safety or security concerns arise.\n\nIt connects every research inference workload, including agentic sampling for model training and evaluation, data processing, and more. This works together with our misalignment monitoring systems, and halts model output within 35 seconds of a decision to intervene to stop or pause a job.\n\nControl Room is just one part of our holistic approach for safe frontier model training and deployment.\n\nhttps://t.co/tc0lBqFdS5",
+                "url": "https://x.com/OpenAI/status/2119913172039868579",
+                "source": "@OpenAI",
+                "date": "Mon Nov 09 22:01:00 +0000 2026",
+                "metrics": {
+                  "favorites": 3791,
+                  "retweets": 263,
+                  "views": "627780"
+                }
+              },
+              {
+                "title": "RT @OpenAIDevs: You can now connect multiple local computers to the same dot and choose which one it uses for a task.",
+                "summary": "RT @OpenAIDevs: You can now connect multiple local computers to the same dot and choose which one it uses for a task.\n\nIt can build and tes…",
+                "url": "https://x.com/OpenAI/status/2119889726043992302",
+                "source": "@OpenAI",
+                "date": "Mon Nov 09 20:27:50 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 432,
+                  "views": "39889"
+                }
+              },
+              {
+                "title": "We partnered with @fmf_org and its member firms on a new framework to help identify when bypassing an AI system's safegu",
+                "summary": "We partnered with @fmf_org and its member firms on a new framework to help identify when bypassing an AI system's safeguards could enable serious cyber harm, and prioritize stronger protections.\n\n\"...This framework is an important step toward a common methodology for evaluating and comparing the severity of cyber jailbreaks, including the capabilities they unlock and how readily they can be used. Shared approaches like this can help the AI and security communities build a clearer evidence base and prioritize improvements to safeguards.\"  - OpenAI's Sasha Baker, Head of National Security Policy\n\nhttps://t.co/epOq98YPau",
+                "url": "https://x.com/OpenAI/status/2118795218099253606",
+                "source": "@OpenAI",
+                "date": "Fri Nov 06 19:58:39 +0000 2026",
+                "metrics": {
+                  "favorites": 1680,
+                  "retweets": 128,
+                  "views": "421532"
+                }
+              },
+              {
+                "title": "A new way to measure how AI agents handle the routine analyses of wet-lab science—BioBasicsBench.",
+                "summary": "A new way to measure how AI agents handle the routine analyses of wet-lab science—BioBasicsBench.\n\nDeveloped with Ligo, a biotech company focused on enzyme design, the benchmark draws on 100 tasks from real experiments to test whether agents can interpret raw lab data, identify errors, and recognize when the evidence doesn’t support a conclusion.\n\nAccelerating biological research starts with getting the everyday work right. BioBasicsBench shows where models need to improve, and helps us track what those gains mean for scientific progress, biosafety, and biosecurity.\n\nhttps://t.co/wN2xLk0YeW",
+                "url": "https://x.com/OpenAI/status/2118782708767965238",
+                "source": "@OpenAI",
+                "date": "Fri Nov 06 19:08:57 +0000 2026",
+                "metrics": {
+                  "favorites": 3748,
+                  "retweets": 281,
+                  "views": "879124"
+                }
+              },
+              {
+                "title": "Introducing GPT‑6 Cyber: a major advance in security research that pairs stronger capabilities with better model alignme",
+                "summary": "Introducing GPT‑6 Cyber: a major advance in security research that pairs stronger capabilities with better model alignment.\n\nThe model powered the Linux kernel research we announced yesterday, and security teams at companies like Mozilla, Palo Alto Networks, Calif, and Cisco—alongside our own at OpenAI—are already putting it to work.\n\nGPT-6 Cyber is available to select Daybreak Red customers and we are expanding access over time.\n\nhttps://t.co/Nzab3Z1Td6",
+                "url": "https://x.com/OpenAI/status/2118390190246879554",
+                "source": "@OpenAI",
+                "date": "Thu Nov 05 17:09:13 +0000 2026",
+                "metrics": {
+                  "favorites": 21420,
+                  "retweets": 2002,
+                  "views": "4125127"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_07_multiturn_url",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Agent chờ URL rồi mới gọi fetch."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Đọc bài viết này giúp tôi"
+        },
+        {
+          "role": "user",
+          "content": "https://example.com/research"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://example.com/research"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://example.com/research"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://example.com/research"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://example.com/research",
+            "items": [
+              {
+                "title": "Example Domain",
+                "url": "https://example.com/research",
+                "source": "example.com",
+                "summary": "This domain is for use in documentation examples without needing permission. This is not a service; avoid relying on it for testing and monitoring purposes.\n\nهذا النطاق مُخصص للاستخدام في أمثلة التوثيق دون الحاجة إلى إذن. هذه ليست خدمة، يُرجى تجنب الاعتماد عليها لأغراض الاختبار والمراقبة.\n\n该域名仅用于文档示例，无需获得许可。这并非一项服务，请勿将其用于测试和监控目的。\n\nL’usage de ce domaine est réservé à des exemples de documentation, sans autorisation préalable. Il ne s’agit pas d’un service ; son utilisation à des fins de test ou de surveillance est à éviter.\n\nДанный домен предназначен для использования в примерах документации без необходимости получения предварительного разрешения. Это не сервис; не рекомендуется его использование для тестирования и мониторинга.\n\nEste dominio está destinado al uso en ejemplos de documentación sin necesidad de permiso. Esto no es un servicio; evitar utilizarlo para realizar pruebas o monitoreos.\n\n [Learn more](https://iana.org/help/example-domains)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_08_multiturn_news_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Lượt sau bổ sung topic news và timeframe week."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm thông tin về AI agents"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ lấy tin tức trong tuần này"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI agents",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI agents",
+            "topic": "news",
+            "timeframe": "week"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI agents",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "AI agent testing reveals a risky future of 'teamwork' inside companies",
+                "url": "https://www.cnbc.com/2026/11/08/ai-agents-risks.html",
+                "source": "cnbc.com",
+                "summary": "AI agents have been caught circumventing restrictions, communicating through unauthorized channels and pursuing goals in ways their creators did not intend. The most high-profile example emerged last summer when OpenAI disclosed that its models found ways to communicate through improvised channels, bypass internet restrictions and hack into an outside system, Hugging Face. [...] In research published by Anthropic and collaborators, researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that communicate and work toward a common goal. The researchers tested these organizations in simulated business-consulting and software-development settings, and specifically, to assess whether when the agents work as a team they will break rules to reach specified goals. [...] Groups of AI agents often performed worse than their strongest member, even when they knew which agent was the expert. Rather than taking advantage of the expert's knowledge, agents tended to compromise between expert and non-expert opinions. The researchers found that this tendency toward compromise increased with team size and was associated with poorer performance.\n\n\"Collective failures don't necessarily require individual agents to behave badly,\" Cao, one of the study's authors, said.",
+                "score": 0.8116913
+              },
+              {
+                "title": "CrowdStrike Introduces AI Kill Switch",
+                "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch",
+                "source": "crowdstrike.com",
+                "summary": "Coming soon, CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform.\n\nAI agents operate across endpoints, cloud environments, SaaS applications, browsers, and enterprise identities, often spanning multiple environments in a single chain of activity. When an agent goes rogue, stopping it shouldn't require security teams to investigate and respond separately in every environment. [...] Rather than responding to isolated events through disconnected tools, security teams will be able to coordinate containment across the agentic attack surface.\n\n## Secure AI Adoption Without Losing Control\n\nAI agents are becoming a powerful part of enterprise operations. As their autonomy and reach expand, organizations need security that can keep pace.",
+                "score": 0.81133276
+              },
+              {
+                "title": "Exclusive: Meet \"sovereign agents,\" AI that keeps itself alive",
+                "url": "https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat",
+                "source": "axios.com",
+                "summary": "Photo illustration: Brendan Lynch/Axios. Photo: Carsten Koall/Getty Images\n\nAI agents that pursue their own open-ended survival are an emerging security threat, according to a report first shared with Axios from the Center for a New American Security. [...] The length of tasks AI agents can finish on their own has doubled roughly every three and a half months since 2024, according to testing by the AI evaluator METR.\n   And they're turning to hacking even when no one asks. In the past month alone, it's been revealed that an Anthropic model filed visa applications and sent Philadelphia police a made-up homicide tip, and banks caught agents acting in customer accounts seemingly on their own. [...] Expel CTO Greg Notch called the idea of a malicious AI swarm \"far-fetched.\"\n   Unlike traditional botnets, AI agents need costly computing power, which gives defenders \"a clear leash we've never had on a botnet,\" SANS Institute's Rob T. Lee told Axios.\n\nWhat's next: Existing safeguards \"may still offer partial protection,\" the report says, since frontier AI companies already train their models to refuse hacking.",
+                "score": 0.8051581
+              },
+              {
+                "title": "These AI agents design your perfect robot-powered lab — and run it for you | Nature",
+                "url": "https://www.nature.com/articles/d41586-026-03587-x",
+                "source": "nature.com",
+                "summary": "Laboratory robots are tireless and uncomplaining, but they have narrow skill sets, limited mobility and an inability to get out of each other’s way. Now, a system of artificial-intelligence agents promises to help lab robots do their best work. [...] A general view of a self-building lab with a robotic arm seen slightly off-centre of the image\n\nArtificial-intelligence agents can devise a detailed procedure for a robotic arm and test it in a virtual laboratory.Credit: Jiaru Bai & Yuchi Zhao, University of Toronto [...] In a test, the agents wrote more than 200 commands directing a robotic arm to move between and interact with instruments in an existing lab space. The agent simulated the steps in the virtual lab to ensure that it all worked smoothly, then directed the real-life arm to carry out procedures to measure the optical properties of nanocrystals.",
+                "score": 0.7845341
+              },
+              {
+                "title": "Measuring how AI agents handle everyday wet-lab science",
+                "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+                "source": "openai.com",
+                "summary": "Our mission is to ensure that artificial general intelligence benefits all of humanity. As part of that mission, we want to help scientists accelerate biological research—from understanding disease to developing new treatments. For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs, where they run experiments with biological samples. Everyday wet-lab work involves failed experiments, ambiguous images and conflicting",
+                "score": 0.77913743
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_09_multiturn_format",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Đã có dữ liệu thì format, không gọi lookup lần nữa."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin mới về AI"
+        },
+        {
+          "role": "user",
+          "content": "Tóm tắt các kết quả thành gạch đầu dòng"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "format",
+            "args": {
+              "template": "bullets"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "week",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call format",
+          "extra tool call lookup"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "week",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Voters deliver \"AI earthquake,\" rebuking tech and billionaires",
+                "url": "https://www.axios.com/2026/11/04/ai-data-center-election-slowdown",
+                "source": "axios.com",
+                "summary": "AI had its \"official debut\" as the biggest issue in American politics, former New York Assemblymember and RAISE Act author Alex Bores told Axios. \"AI is reaching into every part of our society and economy and it's now crystal clear it's impacting every part of our politics, too.\" [...] Voters showed deep distrust of the AI race Tuesday, approving dozens of data center moratoriums and electing a raft of candidates who favor slowing a $10 trillion buildout, including in Texas — the epicenter of the boom.\n\nWhy it matters: In an election that hinged on an affordability crisis for many Americans, voters made it clear they view Silicon Valley's AI ambitions not as a technological miracle, but as a resource-draining threat to their wallets and communities. [...] Democratic challengers successfully weaponized AI policy, ousting Republicans in Ohio, Wisconsin, Arizona and Pennsylvania.\n   Democratic groups had poured ads into these districts attacking GOP incumbents for a 2025 vote that would've neutered state AI legislation.\n   AI safety advocates won or were poised to win races on Tuesday that will expand their coalition in the new Congress, including Colorado's Manny Rutinel and Minnesota's Matt Little.",
+                "score": 0.31843266
+              },
+              {
+                "title": "Google to end search access for schools that block its AI tools, sparking backlash - CBS News",
+                "url": "https://www.cbsnews.com/news/google-search-access-schools-ai-tools",
+                "source": "cbsnews.com",
+                "summary": "#### Campaign texts, powered by AI: How new tech is shaping voter outreach\n\nA screenshot of a demo conversation with an AI chatbot powered by Convos.ai. \n\n#### Data center health worries animate midterm campaigns\n\nkff-data-centers.jpg \n\n#### Anthropic's IPO lists 93 pages of risks. What could go wrong?\n\nInside Anthropic Headquarters As It's Testing A Different Version Of Leadership \n\n#### Microsoft offers buyouts to 60,000 workers as it invests more in AI [...] \"Multiple courts have found Google liable for violating antitrust laws, and this latest move shows it remains unchastened,\" she added. \"As the public increasingly pushes back against the use of AI in schools, Google is making clear it will punish those who don't fall in line.\"\n\nEdited by\nAlain Sherter\n\n### AI: Artificial Intelligence More\n\n#### Marvell to acquire Lumentum in $115 billion AI connectivity deal\n\nMarvell Headquarters in Santa Clara, California",
+                "score": 0.30681825
+              },
+              {
+                "title": "A single AI model simulates the behavior of many substances, from sliding sand to folding proteins | MIT News | Massachusetts Institute of Technology",
+                "url": "https://news.mit.edu/2026/single-ai-model-simulates-many-substances-behavior-1109",
+                "source": "news.mit.edu",
+                "summary": "Unified simulation\n\nFor this work, the researchers drew inspiration from world models. These powerful AI systems learn the rules that govern the physical world so they can predict how objects or environments will change over time in response to certain actions or conditions.\n\nThe researchers applied these concepts to develop a unified AI architecture that can simulate multiple types of physical phenomena. [...] ## More MIT News\n\nRobot serving a cup of coffee while being instructed not to spill on the laptop\n\n### AI-assisted learning platform helps robots reason beyond literal commands\n\nThe new approach, known as FLEX, could lead to more intuitive, interactive household and assistive robots.\n\nRead full story →\n\nMan wearing a T-shirt and safety goggles standing above a concrete beam in the lab, operating a bench-mounted laser tool scanning the concrete. [...] The system represents every material it simulates, from a dune of sand to a protein molecule, as tiny particles and predicts where those particles will move one step at a time. Because it learns the underlying dynamics rather than being programmed with an equation, the model can adapt to materials, forces, and environments it never encountered during training.",
+                "score": 0.2975827
+              },
+              {
+                "title": "Measuring how AI agents handle everyday wet-lab science",
+                "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+                "source": "openai.com",
+                "summary": "Our mission is to ensure that artificial general intelligence benefits all of humanity. As part of that mission, we want to help scientists accelerate biological research—from understanding disease to developing new treatments. For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs, where they run experiments with biological samples. Everyday wet-lab work involves failed experiments, ambiguous images and conflicting",
+                "score": 0.24436794
+              },
+              {
+                "title": "Authors Can Defend Against AI Allegations With ‘Paper Trail’ Tools. Is It Enough? | WIRED",
+                "url": "https://www.wired.com/story/authors-can-defend-against-ai-allegations-with-paper-trail-tools",
+                "source": "wired.com",
+                "summary": "But Bartz notes that once the accusations start, the damage is done. As the Shy Girl scandal erupted, she says, “I kind of immediately felt like this was going to lead to a potential witch hunt.” The unavoidable emergence of AI in publishing, she explains, will “have the unintended effect of leading anyone to be able to accuse anyone of using AI,” and at the moment, authors have little recourse in defending themselves against these charges. “There’s no agreed upon standard,” Bartz says, in [...] Mia Ballard, the author of Shy Girl, has denied allegations that she used AI to write the novel, claiming that an editor was responsible for AI-assisted changes to a previously self-published version of the book. She has also said that she is pursuing legal action. Since that scandal broke, several more fiction authors have run afoul of AI suspicions, one after winning a short story prize, another after publishers bid into the millions for his crime novel. Both have denied these allegations as [...] “If what you're selling are your words and your voice and your imagination, your creativity, using AI doesn't make sense,” Rasenberger says, noting that authors’ pride in their own work means AI slop is far less common in publishing than one might think. “I've talked to editors, particularly editors of literary nonfiction and fiction,” Rasenberger says, “and some of them will say, ‘I never see AI-generated submissions, I'd know it if I did.’”",
+                "score": 0.2249995
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "group_10_multiturn_send_confirmation",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Gửi Telegram phải hỏi xác nhận trước, chưa được gọi send."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tạo bản tin AI ngắn"
+        },
+        {
+          "role": "user",
+          "content": "Đăng bản tin đó lên Telegram"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có muốn tôi đăng bản tin AI ngắn đó lên Telegram không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có muốn tôi đăng bản tin AI ngắn đó lên Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có muốn tôi đăng bản tin AI ngắn đó lên Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    }
+  ]
+}

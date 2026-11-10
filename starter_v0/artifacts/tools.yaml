@@ -95,12 +95,12 @@ tools:
       required: [text]
 
   - name: policy
-    description: "Tìm trong tài liệu nội bộ."
+    description: "Tra cứu company policy nội bộ; chọn policy_area cụ thể khi chủ đề khớp rõ với một mảng. Dùng source_citation cho độ tin cậy, trích dẫn và xác minh tweet/arXiv; ai_research cho quy trình tìm kiếm, đọc và tóm tắt nghiên cứu; data_privacy cho dữ liệu cá nhân; external_publishing cho xuất bản/chia sẻ ra ngoài; tool_usage cho quy tắc dùng công cụ. Chỉ dùng all khi câu hỏi bao quát nhiều mảng hoặc không thể xác định mảng cụ thể."
     parameters:
       type: object
       properties:
         query: {type: string, default: "", description: "Truy vấn"}
-        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Nhóm"}
+        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Chọn mảng hẹp nhất khớp với yêu cầu: trích dẫn/đánh giá nguồn/tweet/arXiv=source_citation; workflow nghiên cứu=ai_research; dữ liệu cá nhân=data_privacy; phát hành ngoài=external_publishing; thao tác tool=tool_usage. Không để all nếu câu hỏi chỉ rõ một mảng."}
         top_k: {type: integer, default: 3, description: "Số mục"}
       required: [query]
 
