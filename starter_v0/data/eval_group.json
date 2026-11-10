@@ -3,5 +3,211 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "group_01_lookup_ai_news",
+      "phase": "B",
+      "query": "Tìm tin AI mới nhất trong tuần này",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Tin tức web dùng lookup với topic news và timeframe week."
+      }
+    },
+    {
+      "id": "group_02_social_topic",
+      "phase": "B",
+      "query": "Mọi người đang bàn gì về AI agents trên mạng xã hội?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agents"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Chủ đề trên mạng xã hội dùng social_search, không dùng timeline."
+      }
+    },
+    {
+      "id": "group_03_fetch_url",
+      "phase": "B",
+      "query": "Đọc nội dung bài này: https://example.com/ai-report",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://example.com/ai-report"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "URL cụ thể dùng fetch."
+      }
+    },
+    {
+      "id": "group_04_summarize_text",
+      "phase": "B",
+      "query": "Tóm tắt đoạn này: AI agents can search, read, and organize research sources.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "summarize",
+            "args": {}
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Văn bản đã có dùng summarize, không tìm kiếm dữ liệu mới."
+      }
+    },
+    {
+      "id": "group_05_calculator",
+      "phase": "B",
+      "query": "Calculate 27 * 14",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "27 * 14"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Phép tính rõ ràng dùng calculator."
+      }
+    },
+    {
+      "id": "group_06_multiturn_account",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm tweet gần đây"},
+        {"role": "user", "content": "của openai"}
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "openai"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent dùng thông tin tài khoản được bổ sung ở lượt sau."
+      }
+    },
+    {
+      "id": "group_07_multiturn_url",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Đọc bài viết này giúp tôi"},
+        {"role": "user", "content": "https://example.com/research"}
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://example.com/research"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent chờ URL rồi mới gọi fetch."
+      }
+    },
+    {
+      "id": "group_08_multiturn_news_scope",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm thông tin về AI agents"},
+        {"role": "user", "content": "Chỉ lấy tin tức trong tuần này"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Lượt sau bổ sung topic news và timeframe week."
+      }
+    },
+    {
+      "id": "group_09_multiturn_format",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm tin mới về AI"},
+        {"role": "user", "content": "Tóm tắt các kết quả thành gạch đầu dòng"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "format",
+            "args": {
+              "template": "bullets"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Đã có dữ liệu thì format, không gọi lookup lần nữa."
+      }
+    },
+    {
+      "id": "group_10_multiturn_send_confirmation",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tạo bản tin AI ngắn"},
+        {"role": "user", "content": "Đăng bản tin đó lên Telegram"}
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Gửi Telegram phải hỏi xác nhận trước, chưa được gọi send."
+      }
+    }
+  ]
 }

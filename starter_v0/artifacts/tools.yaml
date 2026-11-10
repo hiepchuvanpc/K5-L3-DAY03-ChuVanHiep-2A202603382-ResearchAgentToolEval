@@ -133,3 +133,17 @@ tools:
           type: string
           description: "Biểu thức số học, ví dụ 27 * 14 hoặc (120 / 5) + 3"
       required: [expression]
+
+  - name: summarize
+    description: "Tóm tắt văn bản đã có hoặc nội dung vừa lấy được từ tool khác. Không dùng để tìm kiếm dữ liệu mới."
+    parameters:
+      type: object
+      properties:
+        text:
+          type: string
+          description: "Văn bản cần tóm tắt"
+        max_chars:
+          type: integer
+          default: 500
+          description: "Độ dài tối đa của phần tóm tắt, phải lớn hơn 0"
+      required: [text]

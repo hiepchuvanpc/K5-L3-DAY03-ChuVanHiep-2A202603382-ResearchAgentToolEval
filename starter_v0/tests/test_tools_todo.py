@@ -129,12 +129,20 @@ def test_calculator_rejects_unsupported_python_code() -> None:
     assert result.get("error") == "ValueError"
 
 def test_my_new_tool_happy_path() -> None:
-    pytest.skip(TODO)
+    result = TOOL_FUNCTIONS["summarize"]("  Tin   tức về AI hôm nay.  ", max_chars=18)
+
+    assert result["tool"] == "summarize"
+    assert result["summary"] == "Tin tức về AI hôm..."
+    assert result["original_chars"] > len(result["summary"])
 
 
 def test_my_new_tool_bad_input_from_model() -> None:
-    pytest.skip(TODO)
+    result = TOOL_FUNCTIONS["summarize"]("", max_chars=100)
+
+    assert result["error"] == "ValueError"
 
 
 def test_my_new_tool_failure_returns_error_dict() -> None:
-    pytest.skip(TODO)
+    result = TOOL_FUNCTIONS["summarize"]("Nội dung", max_chars=0)
+
+    assert result["error"] == "ValueError"
