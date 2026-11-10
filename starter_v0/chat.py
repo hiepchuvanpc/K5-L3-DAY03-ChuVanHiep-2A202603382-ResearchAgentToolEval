@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -84,7 +85,9 @@ def run_model_tool_loop(
     tools: list[dict[str, Any]],
     model: str | None,
     max_tool_rounds: int,
+    execute: Callable[[ToolCall], dict[str, Any]] = execute_tool_call,
 ) -> dict[str, Any]:
+    """Run model -> tools -> model rounds. `execute` lets the UI dry-run side-effect tools."""
     working_messages = list(messages)
     rounds: list[dict[str, Any]] = []
     all_tool_events: list[dict[str, Any]] = []
@@ -113,7 +116,7 @@ def run_model_tool_loop(
 
         for call in calls:
             print(f"🔧 {call.name}({json.dumps(call.args, ensure_ascii=False, sort_keys=True)})")
-            event = execute_tool_call(call)
+            event = execute(call)
             round_record["tool_results"].append(event)
             all_tool_events.append(event)
 
