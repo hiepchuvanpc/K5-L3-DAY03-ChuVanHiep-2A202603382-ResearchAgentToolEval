@@ -7,12 +7,12 @@
 ## Team
 
 - Team: ChuVanHiep
-- Members:2A202603382 - Chử Văn Hiệp
-          2A202603527 - Trịnh Công Đức
-          2A202603417 - Nguyễn Tuấn Kiệt 
-          2A202603465 - Đỗ Tuấn Anh
-
-- Provider/model: OpenRouter / `openai`
+- Members:
+    + 2A202603382 - Chử Văn Hiệp
+    + 2A202603527 - Trịnh Công Đức
+    + 2A202603417 - Nguyễn Tuấn Kiệt
+    + 2A202603465 - Đỗ Tuấn Anh
+- Provider/model: OpenRouter / openai
 ---
 
 # PHẦN A — Giới thiệu agent
@@ -48,12 +48,12 @@ URL: https://kingdom-alert-plain-distribution.trycloudflare.com
 
 1. Tìm tin tức AI mới nhất trong tuần này và trình bày thành 5 gạch đầu dòng.
 2. Mọi người đang bàn gì về AI agents trên mạng xã hội?
-3. Đọc và tóm tắt bài viết này: `https://example.com/ai-report`
+3. Đọc và tóm tắt bài viết này: `https://vnexpress.net/dat-da-vui-lap-duong-bang-hieu-do-sap-o-mien-trung-5142868.html`
 4. Tính giúp tôi `(120 / 5) + 27 * 14`.
 5. Soạn bản tin AI để đăng Telegram. Hãy hỏi xác nhận trước khi gửi.
-6. Tìm các bài đăng gần đây của tài khoản `openai`.
+6. Tìm các bài đăng gần đây của tài khoản Twitter `@OpenAI`.
 7. Tra cứu giải thích tổng quan về retrieval-augmented generation (RAG).
-8. Tìm 3 bài báo arXiv về đánh giá AI agent.
+8. Tìm 3 bài báo arXiv về đánh giá AI agent và trính vài câu tiêu biểu.
 
 ---
 
