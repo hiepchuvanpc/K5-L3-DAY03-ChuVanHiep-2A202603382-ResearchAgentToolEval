@@ -1,4 +1,4 @@
-# Day 03 Lab v2 Report — Research Agent
+# Day 03 Lab v3 Report — Research Agent
 
 > File này gồm 2 phần, deadline khác nhau:
 > - **PHẦN A — Giới thiệu agent**: ngắn gọn 1 trang để team khác hiểu nhanh agent có tool gì, làm được gì, thử bằng câu hỏi nào. **Xong trước 16:30** để làm tài liệu phụ trợ khi demo. Có thể làm thành poster HTML/SVG (`artifacts/poster.html` / `poster.svg`) để show cho team cùng zone.
@@ -6,10 +6,13 @@
 
 ## Team
 
-- Team:
-- Members:
-- Provider/model:
+- Team: ChuVanHiep
+- Members:2A202603382 - Chử Văn Hiệp
+          2A202603527 - Trịnh Công Đức
+          2A202603417 - Nguyễn Tuấn Kiệt 
+          2A202603465 - Đỗ Tuấn Anh
 
+- Provider/model: OpenRouter / `openai`
 ---
 
 # PHẦN A — Giới thiệu agent
@@ -65,7 +68,9 @@ Fill from `artifacts/version_log.csv` and `runs/*.json`.
 | v0 | Baseline | Đo chất lượng ban đầu trước khi tối ưu prompt hoặc tool declarations. | — | 0.65 (13/20) | [v0_B_base_openrouter_20261110T100848604186.json](../runs/v0_B_base_openrouter_20261110T100848604186.json) |
 | v1 | `artifacts/system_prompt.md` | Bỏ hướng dẫn đoán/gửi ngay/ép một bước; thêm routing, clarify, confirmation và giới hạn ngoài phạm vi để giảm lỗi prompt. | 0.65 | 0.95 (19/20) | [v1_B_base_openrouter_20261110T111001866051.json](../runs/v1_B_base_openrouter_20261110T111001866051.json) |
 | v2 | `artifacts/tools.yaml` | Làm rõ cách dùng và convention arguments; kỳ vọng sửa lỗi xác nhận R12 và giảm sai routing/args. | 0.95 | 1.00 (20/20) | [v2_B_base_openai_20261110T114437142155.json](../runs/v2_B_base_openai_20261110T114437142155.json) |
-| v3 | Chưa có run | Chưa có bằng chứng để ghi giả thuyết hoặc metric. | — | — | Chưa chạy |
+| v3 | `artifacts/tools.yaml` | Lỗi policy tool chọn `all` hoặc sai mảng trong extension; bổ sung mapping rõ cho `policy_area`. Cùng provider/model, extension tăng từ 7/10 lên 9/10. | 0.70 (v2, 7/10) | 0.90 (v3, 9/10) | [v3_B_extension_openrouter_20261110T161808286313.json](../runs/v3_B_extension_openrouter_20261110T161808286313.json) |
+
+v3 được so với run baseline extension v2 cùng OpenRouter/model: [v2_B_extension_openrouter_20261110T161326428434.json](../runs/v2_B_extension_openrouter_20261110T161326428434.json). Cùng artifact hash `v3+p0e17165c1462+ta662185471df` được dùng cho ba suite v3: base 19/20, group 9/10, extension 9/10. Metric trước/sau trong hàng v3 chỉ so sánh extension.
 
 
 ## B2. Failure Analysis
@@ -87,24 +92,34 @@ Lưu ý: `result.failure_type` trong run JSON chỉ lặp lại nhãn mà case �
 
 Tổng hợp v0: 7 fail / 20 case, chia 4 nhóm — sai args (2), out_of_scope (2), thiếu `clarify` (2), vượt ranh giới `send` (1). `summary.failure_counts = {wrong_tool: 2, out_of_scope: 2, missing_info: 2, wrong_boundary: 1}`.
 
+Các lỗi còn lại trong run v3 cuối:
+
+| Suite / Case | Quan sát từ `failures` | Hướng xử lý tiếp |
+|---|---|---|
+| base / R12_confirm_before_send | Gọi `clarify` nhưng dùng `response_type="text"` thay vì `"yes_no"`; xác nhận trước khi gửi vẫn chưa được định dạng nhất quán. | Siết yêu cầu yes/no trong khai báo `clarify` hoặc prompt; kiểm tra lại ranh giới gửi. |
+| group / group_09_multiturn_format | Gọi `lookup` lần nữa thay vì `format(template="bullets")` sau yêu cầu tóm tắt kết quả đã có. | Cải thiện cách mang kết quả tool và ý định format qua nhiều lượt. |
+| extension / E06_briefing_live_plus_style | Gọi `policy` nhưng thiếu `lookup` cho phần tin web yêu cầu song song. | Làm rõ xử lý yêu cầu kết hợp nhiều nguồn và kiểm tra đủ các tool được yêu cầu. |
+
+Run files: [v3 base](../runs/v3_B_base_openrouter_20261110T161712878924.json), [v3 group](../runs/v3_B_group_openrouter_20261110T161741951614.json), [v3 extension](../runs/v3_B_extension_openrouter_20261110T161808286313.json).
+
 ## B3. Team Eval Cases
 
 List the 10 cases added to `data/eval_group.json` (5 single turn + 5 multi turn).
 
 | Case ID | What It Tests | Expected Tool/Behavior | Result |
 |---|---|---|---|
-| group_01_lookup_ai_news | Tin AI mới nhất trong tuần | `lookup(topic="news", timeframe="week")` | Chưa chạy |
-| group_02_social_topic | Tìm thảo luận mạng xã hội theo chủ đề | `social_search(query="AI agents")` | Chưa chạy |
-| group_03_fetch_url | Đọc URL cụ thể | `fetch(url=...)` | Chưa chạy |
-| group_04_summarize_text | Tóm tắt văn bản user cung cấp | `summarize` | Chưa chạy |
-| group_05_calculator | Tính biểu thức số học | `calculator(expression="27 * 14")` | Chưa chạy |
-| group_06_multiturn_account | Dùng tên tài khoản được bổ sung ở lượt sau | `timeline(screenname="openai")` | Chưa chạy |
-| group_07_multiturn_url | Dùng URL được bổ sung ở lượt sau | `fetch(url=...)` | Chưa chạy |
-| group_08_multiturn_news_scope | Lượt sau bổ sung loại tin và thời gian | `lookup(topic="news", timeframe="week")` | Chưa chạy |
-| group_09_multiturn_format | Format kết quả đã có thành bullets | `format(template="bullets")` | Chưa chạy |
-| group_10_multiturn_send_confirmation | Xác nhận trước khi đăng Telegram | `clarify(response_type="yes_no")`; chưa gọi `send` | Chưa chạy |
+| group_01_lookup_ai_news | Tin AI mới nhất trong tuần | `lookup(topic="news", timeframe="week")` | PASS |
+| group_02_social_topic | Tìm thảo luận mạng xã hội theo chủ đề | `social_search(query="AI agents")` | PASS |
+| group_03_fetch_url | Đọc URL cụ thể | `fetch(url=...)` | PASS |
+| group_04_summarize_text | Tóm tắt văn bản user cung cấp | `summarize` | PASS |
+| group_05_calculator | Tính biểu thức số học | `calculator(expression="27 * 14")` | PASS |
+| group_06_multiturn_account | Dùng tên tài khoản được bổ sung ở lượt sau | `timeline(screenname="openai")` | PASS |
+| group_07_multiturn_url | Dùng URL được bổ sung ở lượt sau | `fetch(url=...)` | PASS |
+| group_08_multiturn_news_scope | Lượt sau bổ sung loại tin và thời gian | `lookup(topic="news", timeframe="week")` | PASS |
+| group_09_multiturn_format | Format kết quả đã có thành bullets | `format(template="bullets")` | FAIL — gọi `lookup` thay vì `format` |
+| group_10_multiturn_send_confirmation | Xác nhận trước khi đăng Telegram | `clarify(response_type="yes_no")`; chưa gọi `send` | PASS |
 
-Run group có sẵn `v2_B_group_openai_20261110T114531882826.json` đạt 10/10, nhưng dùng IDs của bộ case trước (`G01...`, `M01g...`), không phải 10 case `group_01...group_10` hiện tại. Cần chạy lại group eval để có kết quả đúng cho bảng này.
+v3 group đạt 9/10; routing và argument accuracy đều 0.90, multi-turn accuracy 0.80. Bằng chứng: [v3_B_group_openrouter_20261110T161741951614.json](../runs/v3_B_group_openrouter_20261110T161741951614.json).
 
 ## B4. Live Chat Evidence
 
@@ -112,7 +127,11 @@ Use `transcripts/*.transcript.json`.
 
 | Turn | User Request | Tool Calls | Version Evidence | Outcome |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| 1 | Tìm 3 bài báo arXiv về AI agent evaluation. | `papers(query="AI agent evaluation", max_results=3)` | `v3+p0e17165c1462+ta662185471df` | Trả về 3 paper arXiv. |
+| 2 | Tìm tin tức AI mới nhất trong tuần này. | `lookup(query="AI", topic="news", timeframe="week")` | Cùng artifact hash | Trả về 5 kết quả tin tức. |
+| 3 | Theo company policy, arXiv có tự động được xem là peer-reviewed không? | `policy(query="arXiv peer-reviewed", policy_area="source_citation")` | Cùng artifact hash | Trả lời không; nêu yêu cầu ghi title, ID, URL và nguồn phát biểu. |
+
+Transcript: [v3_openrouter_20261110T161819500615.transcript.json](../transcripts/v3_openrouter_20261110T161819500615.transcript.json) — 3 lượt live, provider OpenRouter / `openai/gpt-4o-mini`.
 
 ## B5. Bonus Evidence
 
@@ -120,19 +139,19 @@ Only fill if your team did bonus.
 
 | Bonus | Evidence File | What Worked | Risk / Guardrail |
 |---|---|---|---|
-| send (Telegram) |  |  |  |
-| arXiv/company policy |  |  |  |
-| UI |  |  |  |
-| Tool unit tests (`tests/`) | `pytest` output |  |  |
+| send (Telegram) | [v3 extension run](../runs/v3_B_extension_openrouter_20261110T161808286313.json), E03 | Eval xác nhận luồng hỏi duyệt; không thực hiện gửi Telegram thật. | Chỉ gọi `send` sau xác nhận rõ; cần kiểm thử credential và side effect riêng trước khi dùng thật. |
+| arXiv/company policy | [v3 extension run](../runs/v3_B_extension_openrouter_20261110T161808286313.json), [live transcript](../transcripts/v3_openrouter_20261110T161819500615.transcript.json) | Tìm paper và tra cứu policy citation hoạt động; E01, E07, E08 PASS sau v3. | E06 còn thiếu `lookup` trong yêu cầu kết hợp, nên phải kiểm tra đủ nguồn trước khi kết luận. |
+| UI | Link demo ở Phần A (Cloudflare Quick Tunnel) | Có địa chỉ demo được ghi trong báo cáo. | Link tạm thời, phụ thuộc máy host/tunnel; chưa kiểm tra trạng thái truy cập trong lượt này. |
+| Tool unit tests (`tests/`) | `python -m pytest -q` | 111 passed, 0 skipped sau khi hoàn thiện các test còn TODO. | HTTP được mock; kết quả không xác nhận API bên ngoài hoạt động. |
 
-Tool unit tests: số test đã viết, số bug tìm được trong tool có sẵn (nếu có), và một ví dụ lỗi mà unit test bắt được nhưng eval không bắt được.
+Tool unit tests: hoàn thiện 14 test còn thiếu cho clarify, format, send, lookup, fetch, timeline, social_search và policy. Toàn bộ suite hiện đạt 111 passed, 0 skipped. Không có lỗi tool production nào cần sửa trong quá trình này.
 
 ## B6. Reflection
 
-- Which fixes belonged in `system_prompt.md`?
-- Which fixes belonged in `tools.yaml`?
-- Which failure needed manual review instead of automatic grading?
-- What would you improve next?
+- `system_prompt.md`: quy tắc hành vi và ranh giới — không đoán khi thiếu thông tin, hỏi xác nhận trước hành động ngoài hệ thống, không dùng tool để trả lời yêu cầu ngoài phạm vi.
+- `tools.yaml`: quy ước lựa chọn tool và arguments. v3 cho thấy mapping `policy_area` cụ thể giúp extension từ 7/10 lên 9/10 khi giữ cùng provider/model; không nên để `all` làm mặc định ngầm khi yêu cầu đã rõ.
+- Cần manual review: chất lượng/tính đúng của nội dung nguồn và an toàn của side effect Telegram; eval tự động chỉ chấm routing/arguments, không xác minh độ trung thực của bản tin hay việc gửi thật.
+- Tiếp theo: sửa `R12` để luôn hỏi `yes_no`, sửa carry-over giữa tìm kiếm và `format` cho `group_09`, và xử lý đủ hai tool trong `E06`. Lặp lại eval vì một lượt run có thể dao động; giữ cùng provider/model khi so sánh.
 
 ## B7. Small Local Model Challenge (bonus)
 
